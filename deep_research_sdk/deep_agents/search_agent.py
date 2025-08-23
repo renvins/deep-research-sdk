@@ -57,16 +57,14 @@ class SearchAgent(BaseAgent):
     def __init__(self, 
       model: str,
       queries: list[str],
-      search_agent_prompt: str | None = None,
+      system_prompt: str | None = SEARCH_AGENT_PROMPT
     ):
-        self.model = model
-        self.queries = queries
+      super().__init__(model, system_prompt)
+      self.queries = queries
 
-        self.search_agent_prompt = search_agent_prompt if search_agent_prompt else SEARCH_AGENT_PROMPT
-
-        if not model or not queries:
-            # raise error here
-            pass
+      if not model or not queries:
+        # raise error here
+        pass
     
     async def search(self, input: str):
       if not input:
