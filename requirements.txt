@@ -1,5 +1,5 @@
 pydantic
-openai-agents
+litellm
 python-dotenv
 requests
 rich

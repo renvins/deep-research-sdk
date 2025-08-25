@@ -1,4 +1,4 @@
-from types import ABC
+from abc import ABC, abstractmethod
 
 class BaseAgent(ABC):
 
