@@ -75,7 +75,7 @@ class ResearchCoordinator:
 
                 self.search_results.append(search_result)
 
-                summary_preview = agent_result.final_output[:100] + ("..." if len(agent_result.final_output) > 100 else "")
+                summary_preview = agent_result[:100] + ("..." if len(agent_result) > 100 else "")
 
                 console.print(f"  [green]Summary:[/green] {summary_preview}")
                 console.print(f"  [dim]Analysis completed in {analysis_time:.2f}s[/dim]\n")

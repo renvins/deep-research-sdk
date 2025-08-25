@@ -68,17 +68,21 @@ class SearchAgent(BaseAgent):
       if not input:
         pass
       messages = convert_to_llm_message(self.system_prompt, input)
-      functions = [function_to_dict(url_scrape)]
+      tools = [{
+        "type": "function",
+        "function": function_to_dict(url_scrape)
+      }]
 
       first_response = await acompletion(
         model=self.model,
         messages=messages,
-        functions=functions
+        tools=tools,
+        tool_choice="auto"
       )
       tool_calls = first_response.choices[0].message.tool_calls
 
       if not tool_calls:
-        # raise an error
+        raise Exception("Error during tool choosing")
         pass
 
       # Append for context
