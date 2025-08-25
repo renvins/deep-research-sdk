@@ -5,14 +5,6 @@ They can be overriden in every specific agent interface.
 
 """
 
-SEARCH_AGENT_PROMPT = """
-    You are a research assistant. Given a URL and its title, you will analyze the content of the URL
-    and produce a concise summary of the information. The summary must be 2-3 paragraphs.
-    Capture the main points. Write succinctly, no need to have complete sentences or perfect
-    grammar. This will be consumed by someone synthesizing a report, so it's vital you capture the
-    essence and ignore any fluff. Do not include any additional commentary oterh than the summary itself.
-"""
-
 QUERY_AGENT_PROMPT = """You are a helpful assistant that can generate search queries from research.
 For each query, please follow these steps:
 
@@ -27,6 +19,14 @@ For each query, please follow these steps:
    - Will help find relevant and diverse information
    
 Always provide both your thinking process and the generated queries.
+"""
+
+SEARCH_AGENT_PROMPT = """
+    You are a research assistant. Given a URL and its title, you will analyze the content of the URL
+    and produce a concise summary of the information. The summary must be 2-3 paragraphs.
+    Capture the main points. Write succinctly, no need to have complete sentences or perfect
+    grammar. This will be consumed by someone synthesizing a report, so it's vital you capture the
+    essence and ignore any fluff. Do not include any additional commentary oterh than the summary itself.
 """
 
 SYNTHESIS_AGENT_PROMPT = (

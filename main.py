@@ -2,8 +2,9 @@ import asyncio
 from dotenv import load_dotenv
 from rich.console import Console
 from rich.prompt import Prompt
+from litellm import get_supported_openai_params
 
-from coordinator import ResearchCoordinator
+from deep_research_sdk.coordinator import ResearchCoordinator
 
 load_dotenv()
 
@@ -19,7 +20,7 @@ async def main() -> None:
         console.print("[bold red]Error:[/bold red] Please provide a valid query.")
         return
 
-    research_coordinator = ResearchCoordinator(query=query)
+    research_coordinator = ResearchCoordinator(model="gpt-4o-mini", query=query)
     report = await research_coordinator.research()
 
 if __name__ == "__main__":

@@ -7,8 +7,8 @@ from litellm.utils import function_to_dict
 from bs4 import BeautifulSoup
 
 from .base import BaseAgent
-from prompts.templates import SEARCH_AGENT_PROMPT
-from prompts.converter import convert_to_llm_message
+from .prompts.templates import SEARCH_AGENT_PROMPT
+from .prompts.converter import convert_to_llm_message
 
 def url_scrape(url: str) -> str:
     """Scrape the text from a website
@@ -56,13 +56,11 @@ class SearchResult(BaseModel):
 class SearchAgent(BaseAgent):
     def __init__(self, 
       model: str,
-      queries: list[str],
       system_prompt: str | None = SEARCH_AGENT_PROMPT
     ):
       super().__init__(model, system_prompt)
-      self.queries = queries
 
-      if not model or not queries:
+      if not model:
         # raise error here
         pass
     

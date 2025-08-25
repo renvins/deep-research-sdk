@@ -1,10 +1,12 @@
+from litellm.files.main import ModelResponse
 from pydantic import BaseModel
 from .base import BaseAgent
 from litellm import acompletion
-from prompts.templates import QUERY_AGENT_PROMPT
-from prompts.converter import convert_to_llm_message
+from .prompts.templates import QUERY_AGENT_PROMPT
+from .prompts.converter import convert_to_llm_message
 
 class QueryResponse(BaseModel):
+    """The response from the query agent"""
     queries: list[str]
     thoughts: str
 
@@ -28,5 +30,8 @@ class QueryAgent(BaseAgent):
         messages=messages,
         response_format=QueryResponse
       )
+        import json
 
-        return response
+        content = response.choices[0].message.content
+        parsed_data = json.loads(content)
+        return QueryResponse(**parsed_data)
