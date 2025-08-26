@@ -1,7 +1,0 @@
-pydantic
-litellm
-python-dotenv
-requests
-rich
-bs4
-ddgs
