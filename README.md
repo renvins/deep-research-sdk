@@ -148,24 +148,6 @@ OPENAI_API_KEY=your_openai_api_key_here
 ANTHROPIC_API_KEY=your_anthropic_api_key_here
 ```
 
-Supported model IDs include (but aren’t limited to):
-- `gpt-4o-mini` (great balance)
-- `gpt-4`
-- `gpt-3.5-turbo`
-- `claude-3-sonnet`
-- `claude-3-haiku`
-
----
-
-### ✅ Dependencies
-
-- `litellm` — model routing + unified client
-- `pydantic` — typed responses from agents
-- `rich` — styled CLI
-- `ddgs` — DuckDuckGo search
-- `requests`, `bs4` — basic scraping
-- `python-dotenv` — env management
-
 ---
 
 ### 🛠️ Troubleshooting
@@ -175,6 +157,8 @@ Supported model IDs include (but aren’t limited to):
 - 🐢 Slow runs? Reduce `max_iterations`, or try a faster/cheaper model.
 - 🌍 Network issues? Check firewall/proxy; `ddgs` requires outbound access.
 
+---
+
 ### 📜 License
 
-MIT License
+deep-research-sdk is licensed under the MIT License.
