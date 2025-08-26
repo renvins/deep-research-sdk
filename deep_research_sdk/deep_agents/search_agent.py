@@ -59,14 +59,10 @@ class SearchAgent(BaseAgent):
       system_prompt: str | None = SEARCH_AGENT_PROMPT
     ):
       super().__init__(model, system_prompt)
-
-      if not model:
-        # raise error here
-        pass
     
     async def search(self, input: str):
       if not input:
-        pass
+        raise ValueError("Search input cannot be empty!")
       messages = convert_to_llm_message(self.system_prompt, input)
       tools = [{
         "type": "function",

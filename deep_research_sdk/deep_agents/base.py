@@ -7,5 +7,4 @@ class BaseAgent(ABC):
         self.system_prompt = system_prompt
 
         if not model:
-            # raise exception
-            pass
+            raise ValueError("Model cannot be empty!")

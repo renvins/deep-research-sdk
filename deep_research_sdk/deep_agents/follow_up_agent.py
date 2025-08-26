@@ -1,30 +1,33 @@
 from pydantic import BaseModel
-from agents import Agent
-
-FOLLOW_UP_DECISION_PROMPT = (
-    "You are a researcher that decides whether we have enough information to stop "
-    "researching or whether we need to generate follow-up queries. "
-    "You will be given the original query and summaries of information found so far. "
-    
-    "IMPORTANT: For simple factual questions (e.g., 'How long do dogs live?', 'What is the height of Mount Everest?'), "
-    "if the basic information is already present in the findings, you should NOT request follow-up queries. "
-    
-    "Complex questions about processes, comparisons, or multifaceted topics may need follow-ups, but simple factual "
-    "questions rarely need more than one round of research. "
-    
-    "If you think we have enough information, return should_follow_up=False. If you think we need to generate follow-up queries, return should_follow_up=True. "
-    "If you return True, you will also need to generate 2-3 follow-up queries that address specific gaps in the current findings. "
-    "Always provide detailed reasoning for your decision."
-)
+from litellm import acompletion
+from .base import BaseAgent
+from .prompts.templates import FOLLOW_UP_DECISION_PROMPT
+from .prompts.converter import convert_to_llm_message
 
 class FollowUpResponse(BaseModel):
     should_follow_up: bool
     queries: list[str]
     reasoning: str
 
-follow_up_agent = Agent(
-    name="Follow Up Agent",
-    model="gpt-4o-mini",
-    instructions=FOLLOW_UP_DECISION_PROMPT,
-    output_type=FollowUpResponse
-)
+class FollowUpAgent(BaseAgent):
+    def __init__(
+        self,
+        model: str,
+        findings: str,
+        system_prompt: str | None = FOLLOW_UP_DECISION_PROMPT,
+    ):
+        super().__init__(model, system_prompt)
+        self.findings = findings
+
+        if not findings:
+            raise ValueError("Findings cannot be empty")
+            
+    async def follow_up(self) -> FollowUpResponse:
+        messages = convert_to_llm_message(self.system_prompt, self.findings)
+        result = await acompletion(model=self.model, messages=messages, response_format=FollowUpResponse)
+
+        import json
+        content = result.choices[0].message.content
+        parsed_data = json.loads(content)
+
+        return FollowUpResponse(**parsed_data)

@@ -10,6 +10,7 @@ class SynthesisAgent(BaseAgent):
         system_prompt: str | None = SYNTHESIS_AGENT_PROMPT    
     ):
         super().__init__(model, system_prompt)
+        self.findings = findings
         if not findings:
             pass
     

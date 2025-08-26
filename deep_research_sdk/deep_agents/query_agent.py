@@ -20,7 +20,7 @@ class QueryAgent(BaseAgent):
         self.query = query
 
         if not query:
-            pass
+            raise ValueError("Query cannot be empty!")
     
     async def build_queries(self) -> QueryResponse:
         messages = convert_to_llm_message(self.system_prompt, self.query)
