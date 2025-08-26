@@ -18,6 +18,51 @@ A Python SDK that automates deep, multi-iteration research using AI agents + web
 
 ---
 
+ 
+
+### ⚙️ Installation
+
+```bash
+git clone <repository-url>
+cd deep-research-sdk
+pip install .
+```
+
+Create a `.env` with your API keys:
+```bash
+echo "OPENAI_API_KEY=your_openai_api_key_here" > .env
+# Optional:
+# echo "ANTHROPIC_API_KEY=your_anthropic_api_key_here" >> .env
+```
+
+- Requires Python 3.11+.
+
+---
+
+### 🚀 Quick Start
+
+#### CLI (interactive)
+```bash
+# Installed entrypoint (recommended)
+deep-research-sdk research
+
+# Or run directly from the repo
+python deep_research_sdk/cli.py research
+
+# Show version
+deep-research-sdk -v
+
+# Show help
+deep-research-sdk -h
+python deep_research_sdk/cli.py -h
+```
+You’ll be prompted for a topic. The tool will research it and print a Markdown report.
+
+---
+
+<details>
+<summary>More details</summary>
+
 ### 🏗️ Architecture at a glance
 
 - `ResearchCoordinator` — orchestrates the full loop.
@@ -28,49 +73,15 @@ A Python SDK that automates deep, multi-iteration research using AI agents + web
 
 ---
 
-### ⚙️ Installation
+### 🔬 How it works
 
-```bash
-git clone <repository-url>
-cd deep_research_sdk
-pip install -r requirements.txt
-```
+1. **🧭 Query generation** — Breaks your topic into focused queries.
+2. **🔎 Web search** — Finds results via DuckDuckGo (`ddgs`).
+3. **🧪 Page analysis** — Scrapes each result and summarizes with the model.
+4. **🤔 Follow-up decision** — Decides whether to search again; generates follow-up queries if needed.
+5. **🧵 Synthesis** — Produces a structured Markdown report with key findings and sources.
 
-Create a `.env` with your API keys:
-```bash
-echo "OPENAI_API_KEY=your_openai_api_key_here" > .env
-# Optional:
-# echo "ANTHROPIC_API_KEY=your_anthropic_api_key_here" >> .env
-```
-
-- Requires Python 3.10+.
-
----
-
-### 🚀 Quick Start
-
-#### CLI (interactive)
-```bash
-python main.py
-```
-You’ll be prompted for a topic. The SDK will research it and print a Markdown report.
-
-#### Python API
-```python
-import asyncio
-from deep_research_sdk import ResearchCoordinator
-
-async def main():
-    coordinator = ResearchCoordinator(
-        model="gpt-4o-mini",
-        query="What are the latest developments in quantum computing?",
-        max_iterations=3
-    )
-    report = await coordinator.research()
-    print(report)  # Markdown
-
-asyncio.run(main())
-```
+Note: By default, search pulls a small number of results per query to stay fast and focused.
 
 ---
 
@@ -94,37 +105,24 @@ Method:
 
 ---
 
-### 🔬 How it works
+### 🧰 Python examples
 
-1. **🧭 Query generation** — Breaks your topic into focused queries.
-2. **🔎 Web search** — Finds results via DuckDuckGo (`ddgs`).
-3. **🧪 Page analysis** — Scrapes each result and summarizes with the model.
-4. **🤔 Follow-up decision** — Decides whether to search again; generates follow-up queries if needed.
-5. **🧵 Synthesis** — Produces a structured Markdown report with key findings and sources.
-
-Note: By default, search pulls a small number of results per query to stay fast and focused.
-
----
-
-### 🧰 Examples
-
-#### Tech trends (2 rounds)
 ```python
 import asyncio
 from deep_research_sdk import ResearchCoordinator
 
-async def research_ai_trends():
-    rc = ResearchCoordinator(
+async def main():
+    coordinator = ResearchCoordinator(
         model="gpt-4o-mini",
-        query="What are the emerging trends in artificial intelligence for 2024?",
-        max_iterations=2
+        query="What are the latest developments in quantum computing?",
+        max_iterations=3
     )
-    return await rc.research()
+    report = await coordinator.research()
+    print(report)
 
-print(asyncio.run(research_ai_trends()))
+asyncio.run(main())
 ```
 
-#### Save to file
 ```python
 import asyncio
 from deep_research_sdk import ResearchCoordinator
@@ -171,11 +169,6 @@ Supported model IDs include (but aren’t limited to):
 - `requests`, `bs4` — basic scraping
 - `python-dotenv` — env management
 
-Install via:
-```bash
-pip install -r requirements.txt
-```
-
 ---
 
 ### 🛠️ Troubleshooting
@@ -185,7 +178,7 @@ pip install -r requirements.txt
 - 🐢 Slow runs? Reduce `max_iterations`, or try a faster/cheaper model.
 - 🌍 Network issues? Check firewall/proxy; `ddgs` requires outbound access.
 
----
+</details>
 
 ### 📜 License
 
