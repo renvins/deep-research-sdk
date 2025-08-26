@@ -60,9 +60,6 @@ You’ll be prompted for a topic. The tool will research it and print a Markdown
 
 ---
 
-<details>
-<summary>More details</summary>
-
 ### 🏗️ Architecture at a glance
 
 - `ResearchCoordinator` — orchestrates the full loop.
@@ -177,8 +174,6 @@ Supported model IDs include (but aren’t limited to):
 - 🕸️ Empty/odd summaries? Websites may block scraping; try different queries.
 - 🐢 Slow runs? Reduce `max_iterations`, or try a faster/cheaper model.
 - 🌍 Network issues? Check firewall/proxy; `ddgs` requires outbound access.
-
-</details>
 
 ### 📜 License
 
